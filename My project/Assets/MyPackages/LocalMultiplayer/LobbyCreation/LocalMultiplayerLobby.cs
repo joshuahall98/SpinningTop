@@ -62,7 +62,7 @@ public class LocalMultiplayerLobby : MonoBehaviour
 
         var device = context.control.device;
 
-        var tuple = LocalMultiplayerUserCreationUtil.CreateUser(device, inputActionAsset);
+        var tuple = UserDeviceMappingUtil.CreateUser(device, inputActionAsset);
 
         var userCreated = tuple.Item2;
         
@@ -89,7 +89,12 @@ public class LocalMultiplayerLobby : MonoBehaviour
 
         var device = context.control.device;
 
-        var userIndex = LocalMultiplayerUserCreationUtil.DeleteUser(device);
+        var userIndex = UserDeviceMappingUtil.DeleteUser(device);
+
+        if(userIndex < 0)
+        {
+            return;
+        }
 
         UserDeleted?.Invoke(userIndex);
 

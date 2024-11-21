@@ -8,7 +8,7 @@ using UnityEngine.InputSystem.Users;
 //This script handles the creation of a local multiplayer lobby with 1 keyboard and mouse and any number of controllers.
 
 //NOTE: I have only tested this with KBM and Gamepads, it is unknown how many devices this will work for.
-public static class LocalMultiplayerUserCreationUtil
+public static class UserDeviceMappingUtil
 { 
     static List<InputDevice> inputDevicesPairedWithUsers = new List<InputDevice>();
 
@@ -49,17 +49,25 @@ public static class LocalMultiplayerUserCreationUtil
     public static int DeleteUser(InputDevice device)
     {
 
-        if (InputUser.FindUserPairedToDevice(device) == null)
+        var userToRemove = InputUser.FindUserPairedToDevice(device).Value;
+
+
+        if (userToRemove == null)
         {
             Debug.LogError($"No paired user was found for the following device: {device}");
             return -1;
         }
 
-        var userToRemove = InputUser.FindUserPairedToDevice(device).Value;
+        if (!userToRemove.valid)
+        {
+            Debug.LogError($"The user paired with the device {device} is invalid.");
+            return -1;
+        }
 
+        var userIndex = userToRemove.index;
         userToRemove.actions.Disable();
-
         userToRemove.UnpairDevicesAndRemoveUser();
+
 
         for (int i = inputDevicesPairedWithUsers.Count - 1; i >= 0; i--) 
         {
@@ -75,7 +83,7 @@ public static class LocalMultiplayerUserCreationUtil
             }
         }
 
-        return userToRemove.index;
+        return userIndex;
     }
 
     /// <summary>

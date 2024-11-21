@@ -7,13 +7,7 @@ using UnityEngine.InputSystem.UI;
 public class LobbyPlayerInputSetup : MonoBehaviour, ILobbyPlayerInputSetup
 {
     [SerializeField] InputActionReference submit;
-    //[SerializeField] InputActionReference move;
-
-    public void SetupPlayerPanel(GameObject playerPanel, MultiplayerEventSystem multiplayerEventSystem)
-    {
-        multiplayerEventSystem.playerRoot = playerPanel;
-        multiplayerEventSystem.firstSelectedGameObject = playerPanel.GetComponent<LobbyPlayerPanel>().GetReadyUpBtn().gameObject;
-    }
+    [SerializeField] InputActionReference move;
 
     public void SetupPlayerUIControls(InputActionAsset inputActions, InputSystemUIInputModule inputSystemUIInputModule)
     {

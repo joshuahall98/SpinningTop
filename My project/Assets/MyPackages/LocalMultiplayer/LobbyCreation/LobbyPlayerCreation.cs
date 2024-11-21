@@ -48,12 +48,16 @@ public class LobbyPlayerCreation : MonoBehaviour
 
         if (playerPanel != null)
         {
-            localPlayerLobbyInputSetup.SetupPlayerPanel(playerPanel, multiplayerEventSystem);
+            multiplayerEventSystem.playerRoot = playerPanel;
+            multiplayerEventSystem.firstSelectedGameObject = playerPanel.GetComponent<LobbyPlayerPanel>().GetReadyUpBtn().gameObject;
         }
     }
 
     void DeletePlayer(int userIndex)
     {
+
+        DestroyPlayerUI(userIndex);
+
         var playerToRemove = currentLobbyPlayers[userIndex];
         currentLobbyPlayers.RemoveAt(userIndex);
         Destroy(playerToRemove);
