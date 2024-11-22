@@ -12,6 +12,7 @@ public class LobbyPlayerInputSetup : MonoBehaviour, ILobbyPlayerInputSetup
     public void SetupPlayerUIControls(InputActionAsset inputActions, InputSystemUIInputModule inputSystemUIInputModule)
     {
         inputSystemUIInputModule.submit = InputActionReference.Create(inputActions.FindAction(submit.name));
+        inputSystemUIInputModule.move = InputActionReference.Create(inputActions.FindAction(move.name));
 
     }
 }

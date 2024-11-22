@@ -49,13 +49,13 @@ public class LobbyPlayerCreation : MonoBehaviour
         if (playerPanel != null)
         {
             multiplayerEventSystem.playerRoot = playerPanel;
-            multiplayerEventSystem.firstSelectedGameObject = playerPanel.GetComponent<LobbyPlayerPanel>().GetReadyUpBtn().gameObject;
+            //multiplayerEventSystem.firstSelectedGameObject = playerPanel.GetComponent<LobbyPlayerPanel>().GetReadyUpBtn().gameObject;
+            multiplayerEventSystem.SetSelectedGameObject(playerPanel.GetComponent<LobbyPlayerPanel>().GetReadyUpBtn().gameObject);
         }
     }
 
     void DeletePlayer(int userIndex)
     {
-
         DestroyPlayerUI(userIndex);
 
         var playerToRemove = currentLobbyPlayers[userIndex];
@@ -75,7 +75,7 @@ public class LobbyPlayerCreation : MonoBehaviour
         return playerPanel;
     }
 
-    public void DestroyPlayerUI(int playerIndex)
+    void DestroyPlayerUI(int playerIndex)
     {
         var playerPanel = playerPanels[playerIndex];
         playerPanels.RemoveAt(playerIndex);

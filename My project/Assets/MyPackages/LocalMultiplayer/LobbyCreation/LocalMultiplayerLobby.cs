@@ -4,7 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.UI;
-
+using UnityEngine.InputSystem.Users;
+using UnityEngine.SceneManagement;
 
 [Serializable]
 public class MultiplayerUI
@@ -20,6 +21,8 @@ public class LocalMultiplayerLobby : MonoBehaviour
 {
     [SerializeField] int maxPlayers = 2;
     [SerializeField] InputActionAsset inputActionAsset;
+    [SerializeField] int mainMenuBuildIndex;
+    [SerializeField] int gameBuildIndex;
 
     [Header("Input Bindings")]
     [SerializeField] string joinActionGamepad = "<Gamepad>/<button>";
@@ -28,12 +31,17 @@ public class LocalMultiplayerLobby : MonoBehaviour
     [SerializeField] string leaveActionGamepad = "<Gamepad>/buttonEast";
     [SerializeField] string leaveActionKeyboard = "<Keyboard>/escape";
 
+    [SerializeField] string startGameActionGamepad = "<Gamepad>/buttonWest";
+    [SerializeField] string startGameActionKeyboard = "<Keyboard>/space";
+
     public event Action<InputActionAsset> UserCreated;
     public event Action<int> UserDeleted;
     public event Action AllUsersDeleted;
 
     InputAction joinAction;
     InputAction leaveAction;
+    InputAction startGameAction;
+
     int joinedCount;
 
     void Awake()
@@ -48,6 +56,10 @@ public class LocalMultiplayerLobby : MonoBehaviour
         leaveAction = new InputAction(binding: leaveActionGamepad);
         leaveAction.AddBinding(leaveActionKeyboard);
         leaveAction.started += LeaveLobby;
+
+        startGameAction = new InputAction(binding: startGameActionGamepad);
+        startGameAction.AddBinding(startGameActionKeyboard);
+        startGameAction.started += StartGame;
 
         BeginJoining();
     }
@@ -102,12 +114,30 @@ public class LocalMultiplayerLobby : MonoBehaviour
     }
 
     /// <summary>
+    /// This method starts the game, it can only be activated by the user that created the lobby or mouse and keyboard.
+    /// </summary>
+    private void StartGame(InputAction.CallbackContext context)
+    {
+        var device = context.control.device;
+
+        var userToRemove = InputUser.FindUserPairedToDevice(device).Value;
+
+        if (userToRemove.index == 0 || device is Mouse || device is Keyboard)
+        {
+            EndJoining();
+
+            SceneManager.LoadScene(gameBuildIndex);
+        }    
+    }
+
+    /// <summary>
     /// Call this method to turn on the lobby functionality
     /// </summary>
     public void BeginJoining()
     {
         joinAction.Enable();
         leaveAction.Enable();
+        startGameAction.Enable();
     }
 
     /// <summary>
@@ -117,6 +147,7 @@ public class LocalMultiplayerLobby : MonoBehaviour
     {
         joinAction.Disable();
         leaveAction.Disable();
+        startGameAction.Disable();
     }
 
     void OnDisable()
