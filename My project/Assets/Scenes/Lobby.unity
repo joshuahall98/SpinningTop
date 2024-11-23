@@ -432,7 +432,7 @@ MonoBehaviour:
   inputActionAsset: {fileID: -944628639613478452, guid: a66f87c24772b5442a3e4c6f3485803e,
     type: 3}
   mainMenuBuildIndex: 0
-  gameBuildIndex: 2
+  gameSceneReference: {fileID: 11400000, guid: cacd5c4975eb2924a954f18b11954edb, type: 2}
   joinActionGamepad: <Gamepad>/<button>
   joinActionKeyboard: <Keyboard>/<button>
   joinActionMouse: <Mouse>/<button>
@@ -538,7 +538,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -112.9, y: 38.7}
+  m_AnchoredPosition: {x: -112.8999, y: 38.69995}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1787882085

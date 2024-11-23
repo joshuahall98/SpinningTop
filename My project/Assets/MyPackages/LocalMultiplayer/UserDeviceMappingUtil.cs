@@ -15,13 +15,16 @@ public static class UserDeviceMappingUtil
     /// <summary>
     /// This method creates a new user, binds the user to the most recently used device and then assigns input actions to that user.
     /// </summary>
-    public static (InputActionAsset, bool) CreateUser(InputDevice device, InputActionAsset inputActionAsset)
+    public static bool TryCreateUser(InputDevice device, InputActionAsset inputActionAsset, out InputActionAsset userInputActions)
     {
         var inputDevices = new List<InputDevice>();
 
         if (inputDevicesPairedWithUsers.Contains(device))
-            return (null, false);
-
+        {
+            userInputActions = null;
+            return false;
+        }
+            
         var controlScheme = ControlSchemeSetup(inputActionAsset, device, inputDevices);
 
         var user = InputUser.CreateUserWithoutPairedDevices();
@@ -32,7 +35,7 @@ public static class UserDeviceMappingUtil
             inputDevicesPairedWithUsers.Add(inputDevice);
         }
 
-        var userInputActions = InputActionAsset.FromJson(inputActionAsset.ToJson());
+        userInputActions = InputActionAsset.FromJson(inputActionAsset.ToJson());
 
         user.AssociateActionsWithUser(userInputActions);
 
@@ -40,13 +43,13 @@ public static class UserDeviceMappingUtil
                 
         userInputActions.Enable();
 
-        return (userInputActions, true);
+        return true;
     }
 
     /// <summary>
     /// Delete the paired user of the most recently used device.
     /// </summary>
-    public static int DeleteUser(InputDevice device)
+    public static bool TryDeleteUser(InputDevice device, out int userIndex)
     {
 
         var userToRemove = InputUser.FindUserPairedToDevice(device).Value;
@@ -55,16 +58,18 @@ public static class UserDeviceMappingUtil
         if (userToRemove == null)
         {
             Debug.LogError($"No paired user was found for the following device: {device}");
-            return -1;
+            userIndex = -1;
+            return false;
         }
 
         if (!userToRemove.valid)
         {
             Debug.LogError($"The user paired with the device {device} is invalid.");
-            return -1;
+            userIndex = -1;
+            return false;
         }
 
-        var userIndex = userToRemove.index;
+        userIndex = userToRemove.index;
         userToRemove.actions.Disable();
         userToRemove.UnpairDevicesAndRemoveUser();
 
@@ -83,7 +88,7 @@ public static class UserDeviceMappingUtil
             }
         }
 
-        return userIndex;
+        return true;
     }
 
     /// <summary>

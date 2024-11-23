@@ -22,7 +22,7 @@ public class LocalMultiplayerLobby : MonoBehaviour
     [SerializeField] int maxPlayers = 2;
     [SerializeField] InputActionAsset inputActionAsset;
     [SerializeField] int mainMenuBuildIndex;
-    [SerializeField] int gameBuildIndex;
+    [SerializeField] SceneReferenceScriptableObject gameSceneReference;
 
     [Header("Input Bindings")]
     [SerializeField] string joinActionGamepad = "<Gamepad>/<button>";
@@ -74,16 +74,7 @@ public class LocalMultiplayerLobby : MonoBehaviour
 
         var device = context.control.device;
 
-        var tuple = UserDeviceMappingUtil.CreateUser(device, inputActionAsset);
-
-        var userCreated = tuple.Item2;
-        
-        if (!userCreated)
-        {
-            return;
-        }
-
-        var newUserInputActions = tuple.Item1;
+        if (!UserDeviceMappingUtil.TryCreateUser(device, inputActionAsset, out var newUserInputActions)) return;
 
         UserCreated?.Invoke(newUserInputActions);
 
@@ -101,12 +92,8 @@ public class LocalMultiplayerLobby : MonoBehaviour
 
         var device = context.control.device;
 
-        var userIndex = UserDeviceMappingUtil.DeleteUser(device);
 
-        if(userIndex < 0)
-        {
-            return;
-        }
+        if (!UserDeviceMappingUtil.TryDeleteUser(device, out var userIndex)) return;
 
         UserDeleted?.Invoke(userIndex);
 
@@ -126,7 +113,7 @@ public class LocalMultiplayerLobby : MonoBehaviour
         {
             EndJoining();
 
-            SceneManager.LoadScene(gameBuildIndex);
+            SceneManager.LoadScene(gameSceneReference.GetSceneName());
         }    
     }
 
