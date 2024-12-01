@@ -9,5 +9,5 @@ public interface ILobbyPlayerInputSetup
     /// <summary>
     /// Passes on the required information to setup UI controls for lobby players.
     /// </summary>
-    public void SetupPlayerUIControls(InputActionAsset inputActions, InputSystemUIInputModule inputSystemUIInputModule);
+    public void SetupPlayerUIControls(IInputActionCollection2 inputActions, InputSystemUIInputModule inputSystemUIInputModule);
 }

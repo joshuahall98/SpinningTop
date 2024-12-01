@@ -7,21 +7,15 @@ using UnityEngine.InputSystem.UI;
 using UnityEngine.InputSystem.Users;
 using UnityEngine.SceneManagement;
 
-[Serializable]
-public class MultiplayerUI
-{
-    public MultiplayerEventSystem multiplayerEventSystem;
-    public InputSystemUIInputModule inputSystemUIInputModule;
-}
-
 //TODO: Make player 1 kill lobby on exit
 //TODO: Create the players
 
 public class LocalMultiplayerLobby : MonoBehaviour
 {
     [SerializeField] int maxPlayers = 2;
-    [SerializeField] InputActionAsset inputActionAsset;
-    [SerializeField] int mainMenuBuildIndex;
+    //[SerializeField] InputActionAsset inputActionAsset;
+    [SerializeField] GameObject generatedInputActionAssetObj;
+    private IGeneratedInputActionAsset GeneratedInputActionAsset => generatedInputActionAssetObj.GetComponent<IGeneratedInputActionAsset>();
     [SerializeField] SceneReferenceScriptableObject gameSceneReference;
 
     [Header("Input Bindings")]
@@ -34,7 +28,7 @@ public class LocalMultiplayerLobby : MonoBehaviour
     [SerializeField] string startGameActionGamepad = "<Gamepad>/buttonWest";
     [SerializeField] string startGameActionKeyboard = "<Keyboard>/space";
 
-    public event Action<InputActionAsset> UserCreated;
+    public event Action<IInputActionCollection2> UserCreated;
     public event Action<int> UserDeleted;
     public event Action AllUsersDeleted;
 
@@ -74,7 +68,7 @@ public class LocalMultiplayerLobby : MonoBehaviour
 
         var device = context.control.device;
 
-        if (!UserDeviceMappingUtil.TryCreateUser(device, inputActionAsset, out var newUserInputActions)) return;
+        if (!UserDeviceMappingUtil.TryCreateUser(device, GeneratedInputActionAsset, out var newUserInputActions)) return;
 
         UserCreated?.Invoke(newUserInputActions);
 

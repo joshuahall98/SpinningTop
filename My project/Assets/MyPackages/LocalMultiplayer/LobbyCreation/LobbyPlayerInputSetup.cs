@@ -9,7 +9,7 @@ public class LobbyPlayerInputSetup : MonoBehaviour, ILobbyPlayerInputSetup
     [SerializeField] InputActionReference submit;
     [SerializeField] InputActionReference move;
 
-    public void SetupPlayerUIControls(InputActionAsset inputActions, InputSystemUIInputModule inputSystemUIInputModule)
+    public void SetupPlayerUIControls(IInputActionCollection2 inputActions, InputSystemUIInputModule inputSystemUIInputModule)
     {
         inputSystemUIInputModule.submit = InputActionReference.Create(inputActions.FindAction(submit.name));
         inputSystemUIInputModule.move = InputActionReference.Create(inputActions.FindAction(move.name));

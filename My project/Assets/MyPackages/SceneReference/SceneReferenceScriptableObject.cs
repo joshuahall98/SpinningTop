@@ -7,7 +7,7 @@ using UnityEngine;
 public class SceneReferenceScriptableObject : ScriptableObject
 {
     [SerializeField] private SceneAsset sceneAsset; // Editor-only reference
-    private string scenePath; // Runtime path for the scene
+    [SerializeField, HideInInspector] private string scenePath; // Runtime path for the scene
 
     private void OnValidate()
     {

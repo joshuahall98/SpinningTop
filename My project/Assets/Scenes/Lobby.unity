@@ -389,6 +389,7 @@ GameObject:
   - component: {fileID: 466527047}
   - component: {fileID: 466527046}
   - component: {fileID: 466527045}
+  - component: {fileID: 466527048}
   m_Layer: 0
   m_Name: LocalMultiplayerLobby
   m_TagString: Untagged
@@ -429,9 +430,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxPlayers: 2
-  inputActionAsset: {fileID: -944628639613478452, guid: a66f87c24772b5442a3e4c6f3485803e,
-    type: 3}
-  mainMenuBuildIndex: 0
+  generatedInputActionAssetObj: {fileID: 466527044}
   gameSceneReference: {fileID: 11400000, guid: cacd5c4975eb2924a954f18b11954edb, type: 2}
   joinActionGamepad: <Gamepad>/<button>
   joinActionKeyboard: <Keyboard>/<button>
@@ -455,6 +454,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &466527048
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 466527044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 025dec221fa1b564d945ed86a9a6ec3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0

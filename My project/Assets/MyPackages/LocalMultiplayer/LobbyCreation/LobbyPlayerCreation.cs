@@ -28,7 +28,7 @@ public class LobbyPlayerCreation : MonoBehaviour
         startCalled = true;
     }
 
-    void CreatePlayer(InputActionAsset newUserInputActions)
+    void CreatePlayer(IInputActionCollection2 newUserInputActions)
     {
         var newLobbyPlayer = Instantiate(lobbyPlayerPrefab);
 
