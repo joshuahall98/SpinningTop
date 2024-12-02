@@ -15,7 +15,7 @@ public class PlayerManager : MonoBehaviour
         foreach(var user in InputUser.all)
         {
             var obj = Instantiate(playerInputObject);
-            var inputController = obj.GetComponent<InputController>();
+            var inputController = obj.GetComponent<PlayerInputController>();
             inputController.AssignActions(user.actions);
         }
     }

@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Movement : MonoBehaviour
+public class PlayerMovement : MonoBehaviour
 {
 
-    [SerializeField] InputController controller;
+    [SerializeField] PlayerInputController controller;
+    [SerializeField] PlayerStateController stateController;
 
     [Header("Movement Settings")]
     [SerializeField] float maxSpeed = 5f; // Maximum movement speed
@@ -33,6 +34,19 @@ public class Movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!stateController.IsKnockBacked)
+        {
+            Movement();
+        }
+        else
+        {
+            currentVelocity = Vector3.zero;
+        }
+        
+    }
+
+    private void Movement()
+    {
         inputVector = new Vector3(input.x, 0f, input.y); // Convert input to X-Z plane
 
         // Calculate target velocity
@@ -46,20 +60,12 @@ public class Movement : MonoBehaviour
         if (inputVector.magnitude > 0)
         {
             // Apply acceleration toward the target velocity
-            currentVelocity = Vector3.MoveTowards(
-                currentVelocity,
-                targetVelocity,
-                acceleration * Time.deltaTime
-            );
+            currentVelocity = Vector3.MoveTowards(currentVelocity, targetVelocity, acceleration * Time.deltaTime);
         }
         else
         {
             // Apply deceleration toward zero when no input is present
-            currentVelocity = Vector3.MoveTowards(
-                currentVelocity,
-                Vector3.zero,
-                deceleration * Time.deltaTime
-            );
+            currentVelocity = Vector3.MoveTowards(currentVelocity, Vector3.zero, deceleration * Time.deltaTime);
         }
 
         // Move the player
@@ -69,7 +75,6 @@ public class Movement : MonoBehaviour
     private void GetMovementValue(InputAction.CallbackContext context)
     {
         input = context.ReadValue<Vector2>();
-        Debug.Log($"Input: {input}");
     }
     private float GetTimeFromAgility(float agility)
     {

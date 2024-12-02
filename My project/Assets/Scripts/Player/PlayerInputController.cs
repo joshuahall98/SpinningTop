@@ -5,11 +5,10 @@ using System.Diagnostics.Contracts;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class InputController : MonoBehaviour
+public class PlayerInputController : MonoBehaviour
 {
 
     Controls controls;
-
 
     public event Action<InputAction.CallbackContext> MoveEvent;
 
