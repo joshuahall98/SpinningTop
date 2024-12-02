@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
@@ -7,49 +8,28 @@ using UnityEngine.InputSystem;
 public class InputController : MonoBehaviour
 {
 
-    //[SerializeField] InputActionReference actionButton;
-
     Controls controls;
 
-    //InputActionMap playerControls;
 
-    //needs further work
+    public event Action<InputAction.CallbackContext> MoveEvent;
+
     public void AssignActions(IInputActionCollection inputActions)
     {
 
         controls = (Controls)inputActions;
 
-        Debug.Log(controls);
-
-        /*var inputActionAsset = inputActions as InputActionAsset;
-
-        IInputActionCollection2 convertedInputActions = inputActionAsset;
-
-        convertedInputActions = new Controls();
-
-        controls = convertedInputActions as Controls;
-
-        controls.PlayerControls.ActionButton.ChangeBindingWithPath()
-
-        Debug.Log(controls);
-
-        playerControls = inputActionAsset.FindActionMap(controls.PlayerControls.ToString());
-
-        Debug.Log(playerControls);
-
-        playerControls[actionButton.action.name].performed += ActionButton_performed;
-
-        InputAction test;*/
+        controls.PlayerControls.Movement.performed += Movement;
+        controls.PlayerControls.Movement.canceled += Movement;
 
         EnableAllInputs();
 
     }
 
-
-    private void ActionButton_performed(InputAction.CallbackContext context)
+    private void Movement(InputAction.CallbackContext context)
     {
-        Debug.Log("It is me");
+        MoveEvent?.Invoke(context);
     }
+
 
     public void EnableAllInputs()
     {

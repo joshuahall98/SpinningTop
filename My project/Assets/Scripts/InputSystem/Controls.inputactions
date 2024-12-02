@@ -15,40 +15,13 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "MoveNorth",
-                    "type": "Button",
-                    "id": "f1f69c3b-e9f1-459d-81a6-cb36b7374ca7",
-                    "expectedControlType": "Button",
+                    "name": "Movement",
+                    "type": "Value",
+                    "id": "a869cccd-62bd-47f0-883b-45e71ab0be9a",
+                    "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "MoveEast",
-                    "type": "Button",
-                    "id": "3d6311b6-42a7-4c4c-945f-bc6974f9f654",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "MoveWest",
-                    "type": "Button",
-                    "id": "ed4c5cd1-bff9-4088-8f04-42b17cd812ce",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "MoveSouth",
-                    "type": "Button",
-                    "id": "31edb279-63f9-4399-a16b-53d81fc3d36a",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -76,47 +49,69 @@
                 },
                 {
                     "name": "",
-                    "id": "a2689180-3657-4a99-8ea8-bc51abd7f60a",
-                    "path": "<Gamepad>/dpad/up",
+                    "id": "1de9a394-26d7-4c50-884a-50cf7daf94a9",
+                    "path": "<Gamepad>/leftStick",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "MoveNorth",
+                    "action": "Movement",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "",
-                    "id": "74446b6a-e7d7-41c1-8a4e-673455ebdf5e",
-                    "path": "<Gamepad>/dpad/right",
+                    "name": "Move",
+                    "id": "316888b6-7d06-43f8-9300-7a11edd74afa",
+                    "path": "2DVector",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Gamepad",
-                    "action": "MoveEast",
-                    "isComposite": false,
+                    "groups": "",
+                    "action": "Movement",
+                    "isComposite": true,
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "",
-                    "id": "95048673-e060-4f5b-b9f7-75fc52cdfe0c",
-                    "path": "<Gamepad>/dpad/left",
+                    "name": "up",
+                    "id": "d98d603f-9c0a-49ef-97a1-309be2480bcd",
+                    "path": "<Keyboard>/w",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Gamepad",
-                    "action": "MoveWest",
+                    "groups": "KBM",
+                    "action": "Movement",
                     "isComposite": false,
-                    "isPartOfComposite": false
+                    "isPartOfComposite": true
                 },
                 {
-                    "name": "",
-                    "id": "6986210a-4490-4267-b3c8-5471ebe59781",
-                    "path": "<Gamepad>/dpad/down",
+                    "name": "down",
+                    "id": "8d8c9476-7afb-4164-a8f1-724a206dad71",
+                    "path": "<Keyboard>/s",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Gamepad",
-                    "action": "MoveSouth",
+                    "groups": "KBM",
+                    "action": "Movement",
                     "isComposite": false,
-                    "isPartOfComposite": false
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "left",
+                    "id": "ae735493-d2cc-463f-a007-304264a9a8e5",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KBM",
+                    "action": "Movement",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "d984617f-6365-45f5-80d2-22781f4444f3",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KBM",
+                    "action": "Movement",
+                    "isComposite": false,
+                    "isPartOfComposite": true
                 }
             ]
         },

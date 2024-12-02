@@ -37,40 +37,13 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""MoveNorth"",
-                    ""type"": ""Button"",
-                    ""id"": ""f1f69c3b-e9f1-459d-81a6-cb36b7374ca7"",
-                    ""expectedControlType"": ""Button"",
+                    ""name"": ""Movement"",
+                    ""type"": ""Value"",
+                    ""id"": ""a869cccd-62bd-47f0-883b-45e71ab0be9a"",
+                    ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""MoveEast"",
-                    ""type"": ""Button"",
-                    ""id"": ""3d6311b6-42a7-4c4c-945f-bc6974f9f654"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""MoveWest"",
-                    ""type"": ""Button"",
-                    ""id"": ""ed4c5cd1-bff9-4088-8f04-42b17cd812ce"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""MoveSouth"",
-                    ""type"": ""Button"",
-                    ""id"": ""31edb279-63f9-4399-a16b-53d81fc3d36a"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -98,47 +71,69 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""a2689180-3657-4a99-8ea8-bc51abd7f60a"",
-                    ""path"": ""<Gamepad>/dpad/up"",
+                    ""id"": ""1de9a394-26d7-4c50-884a-50cf7daf94a9"",
+                    ""path"": ""<Gamepad>/leftStick"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""MoveNorth"",
+                    ""action"": ""Movement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": """",
-                    ""id"": ""74446b6a-e7d7-41c1-8a4e-673455ebdf5e"",
-                    ""path"": ""<Gamepad>/dpad/right"",
+                    ""name"": ""Move"",
+                    ""id"": ""316888b6-7d06-43f8-9300-7a11edd74afa"",
+                    ""path"": ""2DVector"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""MoveEast"",
-                    ""isComposite"": false,
+                    ""groups"": """",
+                    ""action"": ""Movement"",
+                    ""isComposite"": true,
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": """",
-                    ""id"": ""95048673-e060-4f5b-b9f7-75fc52cdfe0c"",
-                    ""path"": ""<Gamepad>/dpad/left"",
+                    ""name"": ""up"",
+                    ""id"": ""d98d603f-9c0a-49ef-97a1-309be2480bcd"",
+                    ""path"": ""<Keyboard>/w"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""MoveWest"",
+                    ""groups"": ""KBM"",
+                    ""action"": ""Movement"",
                     ""isComposite"": false,
-                    ""isPartOfComposite"": false
+                    ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": """",
-                    ""id"": ""6986210a-4490-4267-b3c8-5471ebe59781"",
-                    ""path"": ""<Gamepad>/dpad/down"",
+                    ""name"": ""down"",
+                    ""id"": ""8d8c9476-7afb-4164-a8f1-724a206dad71"",
+                    ""path"": ""<Keyboard>/s"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""MoveSouth"",
+                    ""groups"": ""KBM"",
+                    ""action"": ""Movement"",
                     ""isComposite"": false,
-                    ""isPartOfComposite"": false
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""ae735493-d2cc-463f-a007-304264a9a8e5"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KBM"",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""d984617f-6365-45f5-80d2-22781f4444f3"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KBM"",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         },
@@ -731,10 +726,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         // PlayerControls
         m_PlayerControls = asset.FindActionMap("PlayerControls", throwIfNotFound: true);
         m_PlayerControls_ActionButton = m_PlayerControls.FindAction("ActionButton", throwIfNotFound: true);
-        m_PlayerControls_MoveNorth = m_PlayerControls.FindAction("MoveNorth", throwIfNotFound: true);
-        m_PlayerControls_MoveEast = m_PlayerControls.FindAction("MoveEast", throwIfNotFound: true);
-        m_PlayerControls_MoveWest = m_PlayerControls.FindAction("MoveWest", throwIfNotFound: true);
-        m_PlayerControls_MoveSouth = m_PlayerControls.FindAction("MoveSouth", throwIfNotFound: true);
+        m_PlayerControls_Movement = m_PlayerControls.FindAction("Movement", throwIfNotFound: true);
         // LobbyControls
         m_LobbyControls = asset.FindActionMap("LobbyControls", throwIfNotFound: true);
         m_LobbyControls_StartGame = m_LobbyControls.FindAction("StartGame", throwIfNotFound: true);
@@ -812,19 +804,13 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_PlayerControls;
     private List<IPlayerControlsActions> m_PlayerControlsActionsCallbackInterfaces = new List<IPlayerControlsActions>();
     private readonly InputAction m_PlayerControls_ActionButton;
-    private readonly InputAction m_PlayerControls_MoveNorth;
-    private readonly InputAction m_PlayerControls_MoveEast;
-    private readonly InputAction m_PlayerControls_MoveWest;
-    private readonly InputAction m_PlayerControls_MoveSouth;
+    private readonly InputAction m_PlayerControls_Movement;
     public struct PlayerControlsActions
     {
         private @Controls m_Wrapper;
         public PlayerControlsActions(@Controls wrapper) { m_Wrapper = wrapper; }
         public InputAction @ActionButton => m_Wrapper.m_PlayerControls_ActionButton;
-        public InputAction @MoveNorth => m_Wrapper.m_PlayerControls_MoveNorth;
-        public InputAction @MoveEast => m_Wrapper.m_PlayerControls_MoveEast;
-        public InputAction @MoveWest => m_Wrapper.m_PlayerControls_MoveWest;
-        public InputAction @MoveSouth => m_Wrapper.m_PlayerControls_MoveSouth;
+        public InputAction @Movement => m_Wrapper.m_PlayerControls_Movement;
         public InputActionMap Get() { return m_Wrapper.m_PlayerControls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -837,18 +823,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @ActionButton.started += instance.OnActionButton;
             @ActionButton.performed += instance.OnActionButton;
             @ActionButton.canceled += instance.OnActionButton;
-            @MoveNorth.started += instance.OnMoveNorth;
-            @MoveNorth.performed += instance.OnMoveNorth;
-            @MoveNorth.canceled += instance.OnMoveNorth;
-            @MoveEast.started += instance.OnMoveEast;
-            @MoveEast.performed += instance.OnMoveEast;
-            @MoveEast.canceled += instance.OnMoveEast;
-            @MoveWest.started += instance.OnMoveWest;
-            @MoveWest.performed += instance.OnMoveWest;
-            @MoveWest.canceled += instance.OnMoveWest;
-            @MoveSouth.started += instance.OnMoveSouth;
-            @MoveSouth.performed += instance.OnMoveSouth;
-            @MoveSouth.canceled += instance.OnMoveSouth;
+            @Movement.started += instance.OnMovement;
+            @Movement.performed += instance.OnMovement;
+            @Movement.canceled += instance.OnMovement;
         }
 
         private void UnregisterCallbacks(IPlayerControlsActions instance)
@@ -856,18 +833,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @ActionButton.started -= instance.OnActionButton;
             @ActionButton.performed -= instance.OnActionButton;
             @ActionButton.canceled -= instance.OnActionButton;
-            @MoveNorth.started -= instance.OnMoveNorth;
-            @MoveNorth.performed -= instance.OnMoveNorth;
-            @MoveNorth.canceled -= instance.OnMoveNorth;
-            @MoveEast.started -= instance.OnMoveEast;
-            @MoveEast.performed -= instance.OnMoveEast;
-            @MoveEast.canceled -= instance.OnMoveEast;
-            @MoveWest.started -= instance.OnMoveWest;
-            @MoveWest.performed -= instance.OnMoveWest;
-            @MoveWest.canceled -= instance.OnMoveWest;
-            @MoveSouth.started -= instance.OnMoveSouth;
-            @MoveSouth.performed -= instance.OnMoveSouth;
-            @MoveSouth.canceled -= instance.OnMoveSouth;
+            @Movement.started -= instance.OnMovement;
+            @Movement.performed -= instance.OnMovement;
+            @Movement.canceled -= instance.OnMovement;
         }
 
         public void RemoveCallbacks(IPlayerControlsActions instance)
@@ -1070,10 +1038,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     public interface IPlayerControlsActions
     {
         void OnActionButton(InputAction.CallbackContext context);
-        void OnMoveNorth(InputAction.CallbackContext context);
-        void OnMoveEast(InputAction.CallbackContext context);
-        void OnMoveWest(InputAction.CallbackContext context);
-        void OnMoveSouth(InputAction.CallbackContext context);
+        void OnMovement(InputAction.CallbackContext context);
     }
     public interface ILobbyControlsActions
     {
