@@ -13,20 +13,11 @@ public class PlayerCollisions : MonoBehaviour
 
     private void Start()
     {
-        playerCollision.OnCollisionEnter3D_Action += KnockBackOnCollisionEnter;
+        playerCollision.OnCollisionEnter3D_Action += CollisionEnter;
     }
 
-    private void KnockBackOnCollisionEnter(Collision collision)
+    private void CollisionEnter(Collision collision)
     {
-        if(TagExtensions.HasTag(collision.gameObject, playerTag))
-        {
-            Vector3 knockbackDirection = (transform.position - collision.transform.position).normalized;
-
-            // Apply knockback to this player
-            playerKnockback.ApplyKnockback(knockbackDirection);
-
-            // Optionally, apply knockback to the other player
-            collision.gameObject.GetComponent<PlayerKnockback>()?.ApplyKnockback(-knockbackDirection);
-        }
+        CollisionManager.instance.HandleCollisionEnter(gameObject, collision.gameObject);
     }
 }

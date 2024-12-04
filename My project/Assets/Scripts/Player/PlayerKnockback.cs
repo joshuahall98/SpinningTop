@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerKnockback : MonoBehaviour
+public class PlayerKnockback : MonoBehaviour, ICollidable
 {
 
     [SerializeField] PlayerStateController playerStateController;
@@ -33,16 +33,25 @@ public class PlayerKnockback : MonoBehaviour
         if (knockbackTimer <= 0)
         {
             playerStateController.SetKnockback(false); // Reset knockback state
-            knockbackVelocity = Vector3.zero;
+           // knockbackVelocity = Vector3.zero;
         }
     }
 
     public void ApplyKnockback(Vector3 direction)
     {
+        
+
         playerStateController.SetKnockback(true);
         knockbackTimer = knockbackDuration;
 
         // Calculate knockback velocity
         knockbackVelocity = direction.normalized * knockbackForce;
+    }
+
+    public void CollisionEnter(Vector3 collisionObjPosition)
+    {
+        var knockbackDirection = (transform.position - collisionObjPosition).normalized;
+
+        ApplyKnockback(knockbackDirection);
     }
 }

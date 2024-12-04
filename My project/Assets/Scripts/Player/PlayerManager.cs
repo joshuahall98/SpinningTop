@@ -7,7 +7,14 @@ using UnityEngine.InputSystem.Users;
 public class PlayerManager : MonoBehaviour
 {
 
+    PlayerManager instance;
+
     [SerializeField] GameObject playerInputObject;
+
+    private void Awake()
+    {
+        instance = this;
+    }
 
     // Start is called before the first frame update
     void Start()

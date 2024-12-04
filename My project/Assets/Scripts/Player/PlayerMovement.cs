@@ -40,7 +40,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            currentVelocity = Vector3.zero;
+            currentVelocity = currentVelocity * 0.25f;
         }
         
     }
