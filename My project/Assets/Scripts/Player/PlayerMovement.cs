@@ -5,8 +5,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
-
-    [SerializeField] PlayerInputController controller;
+    [SerializeField] PlayerInputController inputController;
     [SerializeField] PlayerStateController stateController;
 
     [Header("Movement Settings")]
@@ -16,11 +15,12 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float timeToMaxSpeed = 1.5f; // Time to reach max speed, based on agility
     [SerializeField] float timeToStop = 1.5f;
 
-    Vector2 input;
-    private Vector3 inputVector; // Input value from the Input System
+    [SerializeField] Rigidbody rb; // Reference to the Rigidbody
+
+    private Vector2 input; // Input value from the Input System
     private Vector3 currentVelocity; // Current velocity of the player
 
-    bool startCalled;
+    private bool startCalled;
 
     private void Start()
     {
@@ -31,23 +31,22 @@ public class PlayerMovement : MonoBehaviour
         timeToStop = GetTimeFromAgility(agility);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void FixedUpdate()
     {
-        if (!stateController.IsKnockBacked)
+        if (stateController.IsKnockBacked)
         {
-            Movement();
+            currentVelocity = rb.velocity;
+            return;
         }
-        else
-        {
-            currentVelocity = currentVelocity * 0.25f;
-        }
+
+        ApplyMovement();
         
     }
 
-    private void Movement()
+    private void ApplyMovement()
     {
-        inputVector = new Vector3(input.x, 0f, input.y); // Convert input to X-Z plane
+
+        Vector3 inputVector = new Vector3(input.x, 0f, input.y); // Convert input to X-Z plane
 
         // Calculate target velocity
         Vector3 targetVelocity = inputVector * maxSpeed;
@@ -60,33 +59,32 @@ public class PlayerMovement : MonoBehaviour
         if (inputVector.magnitude > 0)
         {
             // Apply acceleration toward the target velocity
-            currentVelocity = Vector3.MoveTowards(currentVelocity, targetVelocity, acceleration * Time.deltaTime);
+            currentVelocity = Vector3.MoveTowards(currentVelocity, targetVelocity, acceleration * Time.fixedDeltaTime);
         }
         else
         {
             // Apply deceleration toward zero when no input is present
-            currentVelocity = Vector3.MoveTowards(currentVelocity, Vector3.zero, deceleration * Time.deltaTime);
+            currentVelocity = Vector3.MoveTowards(currentVelocity, Vector3.zero, deceleration * Time.fixedDeltaTime);
         }
 
-        // Move the player
-        transform.Translate(currentVelocity * Time.deltaTime, Space.World);
+        // Apply velocity to the Rigidbody
+        rb.velocity = new Vector3(currentVelocity.x, rb.velocity.y, currentVelocity.z);
     }
 
     private void GetMovementValue(InputAction.CallbackContext context)
     {
         input = context.ReadValue<Vector2>();
     }
+
     private float GetTimeFromAgility(float agility)
     {
         // Example agility-to-time formula: higher agility means lower time
-        // Adjust the curve to fit your game's design
         return Mathf.Max(0.5f, 2f - (agility * 0.1f));
     }
 
-
     private void SubscribeToEvents()
     {
-        controller.MoveEvent += GetMovementValue;
+        inputController.MoveEvent += GetMovementValue;
     }
 
     private void OnEnable()
@@ -99,6 +97,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnDisable()
     {
-        controller.MoveEvent -= GetMovementValue;
+        inputController.MoveEvent -= GetMovementValue;
     }
 }

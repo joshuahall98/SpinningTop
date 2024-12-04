@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerCollisions : MonoBehaviour
+public class PlayerCollision : MonoBehaviour, ICollisionDataProvider
 {
     [SerializeField] PlayerKnockback playerKnockback;
 
@@ -19,5 +19,10 @@ public class PlayerCollisions : MonoBehaviour
     private void CollisionEnter(Collision collision)
     {
         CollisionManager.instance.HandleCollisionEnter(gameObject, collision.gameObject);
+    }
+
+    public CollisionData GetCollisionData()
+    {
+        return new CollisionData(transform.position);
     }
 }

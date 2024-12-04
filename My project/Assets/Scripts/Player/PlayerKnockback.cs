@@ -4,54 +4,57 @@ using UnityEngine;
 
 public class PlayerKnockback : MonoBehaviour, ICollidable
 {
-
     [SerializeField] PlayerStateController playerStateController;
 
-    [Header("Knockback Settings")]
-    [SerializeField] float knockbackForce = 10f; // The intensity of the knockback
-    [SerializeField] float knockbackDuration = 0.5f; // Duration of knockback effect
+    float knockbackDuration; // Duration of knockback effect
 
-    private Vector3 knockbackVelocity;
+    [SerializeField] Rigidbody rb; // Reference to the Rigidbody
+
     private float knockbackTimer = 0f;
 
-    // Update is called once per frame
-    void Update()
+    private Vector3 currentVelocity;
+
+    private void FixedUpdate()
     {
         if (playerStateController.IsKnockBacked)
         {
-            Knockback();
+            HandleKnockback();
         }
-        
+        else
+        {
+            currentVelocity = rb.velocity;
+        }
     }
 
-    private void Knockback()
+    private void HandleKnockback()
     {
-        transform.Translate(knockbackVelocity * Time.deltaTime, Space.World);
+        knockbackTimer -= Time.fixedDeltaTime;
 
-        // Reduce the knockback timer
-        knockbackTimer -= Time.deltaTime;
         if (knockbackTimer <= 0)
         {
-            playerStateController.SetKnockback(false); // Reset knockback state
-           // knockbackVelocity = Vector3.zero;
+            // Reset knockback state
+            playerStateController.SetKnockback(false);
         }
     }
 
-    public void ApplyKnockback(Vector3 direction)
+    public void ApplyKnockback(Vector3 direction, float knockbackForce)
     {
-        
+        knockbackDuration = knockbackForce / 20;
 
         playerStateController.SetKnockback(true);
         knockbackTimer = knockbackDuration;
 
-        // Calculate knockback velocity
-        knockbackVelocity = direction.normalized * knockbackForce;
+        // Apply an impulse force for knockback
+        Vector3 knockbackForceVector = direction.normalized * knockbackForce;
+        rb.AddForce(knockbackForceVector, ForceMode.Impulse);
+        
     }
 
-    public void CollisionEnter(Vector3 collisionObjPosition)
+    public void CollisionEnter(CollisionData collisionData)
     {
-        var knockbackDirection = (transform.position - collisionObjPosition).normalized;
+        // Calculate knockback direction based on collision point
+        var knockbackDirection = (transform.position - collisionData.Position).normalized;
 
-        ApplyKnockback(knockbackDirection);
+        ApplyKnockback(knockbackDirection, collisionData.KnockbackForce);
     }
 }

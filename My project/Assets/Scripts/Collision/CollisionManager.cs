@@ -20,11 +20,6 @@ public class CollisionManager : MonoBehaviour
     public void HandleCollisionEnter(GameObject obj1, GameObject obj2)
     {
 
-        if(obj1.HasTag(floor) || obj2.HasTag(floor))
-        {
-            return;
-        }
-
         var pair = CreatePair(obj1, obj2);
 
         // Check if the pair has already been processed
@@ -39,9 +34,18 @@ public class CollisionManager : MonoBehaviour
         // Calculate knockback direction
         var knockbackDirection = (obj1.transform.position - obj2.transform.position).normalized;
 
+        // Get collision data
+        var obj1CollisionData = obj1.GetComponent<ICollisionDataProvider>()?.GetCollisionData();
+        var obj2CollisionData = obj2.GetComponent<ICollisionDataProvider>()?.GetCollisionData();
+
+        if(obj1CollisionData == null || obj2CollisionData == null)
+        {
+            return;
+        }
+
         // Apply collisoon
-        obj1.GetComponent<ICollidable>()?.CollisionEnter(obj2.transform.position);
-        obj2.GetComponent<ICollidable>()?.CollisionEnter(obj1.transform.position);
+        obj1.GetComponent<ICollidable>()?.CollisionEnter(obj2CollisionData);
+        obj2.GetComponent<ICollidable>()?.CollisionEnter(obj1CollisionData);
 
         StartCoroutine(ReleaseHashSet(pair));
     }
@@ -56,7 +60,7 @@ public class CollisionManager : MonoBehaviour
 
     IEnumerator ReleaseHashSet((GameObject, GameObject) pair)
     {
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForEndOfFrame();
 
         processedCollisions.Remove(pair);
     }
