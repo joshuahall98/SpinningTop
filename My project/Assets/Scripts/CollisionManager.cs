@@ -30,7 +30,6 @@ public class CollisionManager : MonoBehaviour
         // Check if the pair has already been processed
         if (processedCollisions.Contains(pair))
         {
-            Debug.Log("Collision already processed.");
             return;
         }
 
@@ -43,8 +42,6 @@ public class CollisionManager : MonoBehaviour
         // Apply collisoon
         obj1.GetComponent<ICollidable>()?.CollisionEnter(obj2.transform.position);
         obj2.GetComponent<ICollidable>()?.CollisionEnter(obj1.transform.position);
-
-        Debug.Log("Collision Processed");
 
         StartCoroutine(ReleaseHashSet(pair));
     }
@@ -59,13 +56,9 @@ public class CollisionManager : MonoBehaviour
 
     IEnumerator ReleaseHashSet((GameObject, GameObject) pair)
     {
-        Debug.Log("Timer called");
-
         yield return new WaitForSeconds(0.1f);
 
         processedCollisions.Remove(pair);
-
-        Debug.Log("Processed Collision Released");
     }
 
 }
