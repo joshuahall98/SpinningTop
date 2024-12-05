@@ -8,6 +8,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] PlayerInputController inputController;
     [SerializeField] PlayerStateController stateController;
 
+    [SerializeField] Transform view;
+    [SerializeField] float rotationSpeed = 50f;
+
     [Header("Movement Settings")]
     [SerializeField] float maxSpeed = 5f; // Maximum movement speed
     [SerializeField] float agility;
@@ -31,48 +34,54 @@ public class PlayerMovement : MonoBehaviour
         timeToStop = GetTimeFromAgility(agility);
     }
 
+    private void Update()
+    {
+        // Rotate the view based on the player's input
+        view.Rotate(0f, -rotationSpeed * Time.deltaTime, 0f);
+    }
+
     private void FixedUpdate()
     {
+
         if (stateController.IsKnockBacked)
         {
             currentVelocity = rb.velocity;
             return;
         }
 
-        ApplyMovement();
-        
+        ApplyMovement();   
     }
 
     private void ApplyMovement()
     {
+        Vector3 inputVector = new Vector3(input.x, 0f, input.y);
 
-        Vector3 inputVector = new Vector3(input.x, 0f, input.y); // Convert input to X-Z plane
-
-        // Calculate target velocity
+        // Calculate target velocity based on input
         Vector3 targetVelocity = inputVector * maxSpeed;
 
-        // Calculate acceleration and deceleration dynamically
+        // Calculate acceleration and deceleration
         float acceleration = maxSpeed / timeToMaxSpeed;
         float deceleration = maxSpeed / timeToStop;
 
-        // Handle acceleration and deceleration
+        // Apply movement based on input
         if (inputVector.magnitude > 0)
         {
-            // Apply acceleration toward the target velocity
+            // Accelerate towards the target velocity
             currentVelocity = Vector3.MoveTowards(currentVelocity, targetVelocity, acceleration * Time.fixedDeltaTime);
         }
         else
         {
-            // Apply deceleration toward zero when no input is present
+            // Decelerate towards zero if no input
             currentVelocity = Vector3.MoveTowards(currentVelocity, Vector3.zero, deceleration * Time.fixedDeltaTime);
         }
 
-        // Apply velocity to the Rigidbody
-        rb.velocity = new Vector3(currentVelocity.x, rb.velocity.y, currentVelocity.z);
+        // Apply the calculated velocity directly to the Rigidbody (non-physics-based movement)
+        rb.MovePosition(transform.position + currentVelocity * Time.fixedDeltaTime);
     }
 
     private void GetMovementValue(InputAction.CallbackContext context)
     {
+        // Update input value based on player input (from the Input System)
         input = context.ReadValue<Vector2>();
     }
 
@@ -84,6 +93,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void SubscribeToEvents()
     {
+        // Subscribe to input movement events
         inputController.MoveEvent += GetMovementValue;
     }
 
@@ -97,6 +107,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnDisable()
     {
+        // Unsubscribe from input events
         inputController.MoveEvent -= GetMovementValue;
     }
 }
