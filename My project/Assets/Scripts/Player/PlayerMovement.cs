@@ -48,7 +48,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         ApplyMovement();
-        //ApplyLeaning();
+        ApplyLeaning();
     }
 
     private void ApplyMovement()
