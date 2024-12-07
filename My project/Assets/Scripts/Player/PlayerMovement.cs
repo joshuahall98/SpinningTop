@@ -9,19 +9,20 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] PlayerStateController stateController;
 
     [SerializeField] Transform view;
+    [SerializeField] Rigidbody rb; // Reference to the Rigidbody
     [SerializeField] float rotationSpeed = 50f;
 
     [Header("Movement Settings")]
-    [SerializeField] float maxSpeed = 5f; // Maximum movement speed
-    [SerializeField] float agility;
+    [SerializeField, Range(15f, 25f)] float maxSpeed = 5f; // Maximum movement speed
+    [SerializeField, Range(0.25f, 0.75f)] float movementResponseTime;
 
-    [SerializeField] float timeToMaxSpeed = 1.5f; // Time to reach max speed, based on agility
-    [SerializeField] float timeToStop = 1.5f;
-
-    [SerializeField] Rigidbody rb; // Reference to the Rigidbody
+    [Header("Tilt Settings")]
+    [SerializeField] float leanAmount = 10f; // Maximum lean angle in degrees
+    [SerializeField] float leanSpeed = 5f;  // Speed of leaning adjustment
 
     private Vector2 input; // Input value from the Input System
-    private Vector3 currentVelocity; // Current velocity of the player
+    private Vector3 currentVelocity; // Current velocity of the player 
+    public Vector3 CurrentVelocity => currentVelocity;
 
     private bool startCalled;
 
@@ -29,9 +30,6 @@ public class PlayerMovement : MonoBehaviour
     {
         SubscribeToEvents();
         startCalled = true;
-
-        timeToMaxSpeed = GetTimeFromAgility(agility);
-        timeToStop = GetTimeFromAgility(agility);
     }
 
     private void Update()
@@ -49,7 +47,8 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
 
-        ApplyMovement();   
+        ApplyMovement();
+        //ApplyLeaning();
     }
 
     private void ApplyMovement()
@@ -60,19 +59,18 @@ public class PlayerMovement : MonoBehaviour
         Vector3 targetVelocity = inputVector * maxSpeed;
 
         // Calculate acceleration and deceleration
-        float acceleration = maxSpeed / timeToMaxSpeed;
-        float deceleration = maxSpeed / timeToStop;
+        float agility = maxSpeed / movementResponseTime; 
 
         // Apply movement based on input
         if (inputVector.magnitude > 0)
         {
             // Accelerate towards the target velocity
-            currentVelocity = Vector3.MoveTowards(currentVelocity, targetVelocity, acceleration * Time.fixedDeltaTime);
+            currentVelocity = Vector3.MoveTowards(currentVelocity, targetVelocity, agility * Time.fixedDeltaTime);
         }
         else
         {
             // Decelerate towards zero if no input
-            currentVelocity = Vector3.MoveTowards(currentVelocity, Vector3.zero, deceleration * Time.fixedDeltaTime);
+            currentVelocity = Vector3.MoveTowards(currentVelocity, Vector3.zero, agility * Time.fixedDeltaTime);
         }
 
         // Apply the calculated velocity directly to the Rigidbody (non-physics-based movement)
@@ -85,10 +83,33 @@ public class PlayerMovement : MonoBehaviour
         input = context.ReadValue<Vector2>();
     }
 
-    private float GetTimeFromAgility(float agility)
+    private void ApplyLeaning()
     {
-        // Example agility-to-time formula: higher agility means lower time
-        return Mathf.Max(0.5f, 2f - (agility * 0.1f));
+        // If there's no movement, don't lean
+        if (currentVelocity.magnitude < 0.1f)
+        {
+            ResetLeaning();
+            return;
+        }
+
+        // Get the normalized movement direction in local space
+        Vector3 localDirection = transform.InverseTransformDirection(currentVelocity.normalized);
+
+        // Calculate lean based on forward and sideways movement
+        float leanAngleZ = -localDirection.x * leanAmount; // Side-to-side tilt (banking)
+        float leanAngleX = localDirection.z * leanAmount;  // Forward/backward tilt
+
+        // Create a target rotation for the lean
+        Quaternion targetLean = Quaternion.Euler(leanAngleX, 0f, leanAngleZ);
+
+        // Smoothly interpolate the current rotation to the target lean rotation
+        transform.localRotation = Quaternion.Lerp(transform.localRotation, targetLean, leanSpeed * Time.fixedDeltaTime);
+    }
+
+    private void ResetLeaning()
+    {
+        // Smoothly return to upright position
+        transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.identity, leanSpeed * Time.fixedDeltaTime);
     }
 
     private void SubscribeToEvents()

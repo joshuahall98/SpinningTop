@@ -41,7 +41,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""type"": ""Value"",
                     ""id"": ""a869cccd-62bd-47f0-883b-45e71ab0be9a"",
                     ""expectedControlType"": ""Vector2"",
-                    ""processors"": """",
+                    ""processors"": ""NormalizeVector2"",
                     ""interactions"": """",
                     ""initialStateCheck"": true
                 }

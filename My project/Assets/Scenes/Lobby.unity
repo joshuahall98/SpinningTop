@@ -429,7 +429,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35d1e5c919598f047b476a45018ea43d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxPlayers: 2
+  maxPlayers: 4
   generatedInputActionAssetObj: {fileID: 466527044}
   gameSceneReference: {fileID: 11400000, guid: cacd5c4975eb2924a954f18b11954edb, type: 2}
   joinActionGamepad: <Gamepad>/<button>

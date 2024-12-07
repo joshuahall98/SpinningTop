@@ -9,9 +9,6 @@ public class CollisionManager : MonoBehaviour
 
     private readonly HashSet<(GameObject, GameObject)> processedCollisions = new HashSet<(GameObject, GameObject)>();
 
-    [Header("Tags")]
-    [SerializeField] TagScriptableObject floor;
-
     private void Awake()
     {
         instance = this;

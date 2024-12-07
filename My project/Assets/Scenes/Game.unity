@@ -410,6 +410,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f355ae827b83dd4d9bbf47254f6a995, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  knockbackForce: 1
 --- !u!1 &629152005
 GameObject:
   m_ObjectHideFlags: 0
@@ -668,6 +669,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f355ae827b83dd4d9bbf47254f6a995, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  knockbackForce: 1
 --- !u!1 &793118882
 GameObject:
   m_ObjectHideFlags: 0
@@ -817,7 +819,6 @@ GameObject:
   - component: {fileID: 990515129}
   - component: {fileID: 990515128}
   - component: {fileID: 990515127}
-  - component: {fileID: 990515131}
   m_Layer: 0
   m_Name: Floor
   m_TagString: Untagged
@@ -912,20 +913,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1349317111}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
---- !u!114 &990515131
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 990515126}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd90699561adb164ea596ea6b6d49978, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tags:
-  - {fileID: 11400000, guid: 8f2d8e82343f45241b30c87293c938f7, type: 2}
 --- !u!1 &1046304961
 GameObject:
   m_ObjectHideFlags: 0
@@ -1044,6 +1031,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f355ae827b83dd4d9bbf47254f6a995, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  knockbackForce: 1
 --- !u!1 &1160910206
 GameObject:
   m_ObjectHideFlags: 0
@@ -12347,6 +12335,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f355ae827b83dd4d9bbf47254f6a995, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  knockbackForce: 1
 --- !u!1 &1349317110
 GameObject:
   m_ObjectHideFlags: 0
@@ -12780,13 +12769,14 @@ GameObject:
   - component: {fileID: 1941009031}
   - component: {fileID: 1941009030}
   - component: {fileID: 1941009029}
+  - component: {fileID: 1941009033}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &1941009029
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -12873,6 +12863,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1941009033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1941009028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f355ae827b83dd4d9bbf47254f6a995, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  knockbackForce: 1
 --- !u!1 &1963701553
 GameObject:
   m_ObjectHideFlags: 0
