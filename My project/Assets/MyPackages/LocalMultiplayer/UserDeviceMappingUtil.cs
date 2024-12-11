@@ -90,7 +90,7 @@ public static class UserDeviceMappingUtil
     /// <summary>
     /// Delete the paired user of the most recently used device.
     /// </summary>
-    public static bool TryDeleteUser(InputDevice device, out int userIndex)
+    public static bool TryDeleteUser(InputDevice device)
     {
 
         var userToRemove = InputUser.FindUserPairedToDevice(device).Value;
@@ -99,18 +99,15 @@ public static class UserDeviceMappingUtil
         if (userToRemove == null)
         {
             Debug.LogError($"No paired user was found for the following device: {device}");
-            userIndex = -1;
             return false;
         }
 
         if (!userToRemove.valid)
         {
             Debug.LogError($"The user paired with the device {device} is invalid.");
-            userIndex = -1;
             return false;
         }
 
-        userIndex = userToRemove.index;
         userToRemove.actions.Disable();
         userToRemove.UnpairDevicesAndRemoveUser();
 

@@ -6,10 +6,10 @@ public class PlayerKnockback : MonoBehaviour, ICollidable
 {
     [SerializeField] PlayerStateController playerStateController;
     [SerializeField] Rigidbody rb; // Reference to the Rigidbody
-    [SerializeField] float defaultKnocbackValue = 5;
+    [SerializeField] float defaultKnocbackValue = 3;
 
     //THIS NEEDS TO POPULATED BY SPIN TOP DATA
-    [SerializeField] float weightData = 10;
+    [SerializeField, Range(0, 10)] int weightData = 10;
 
     private float knockbackTimer = 0f;
     private Vector3 knockbackVelocity; // Store the knockback velocity
@@ -57,7 +57,11 @@ public class PlayerKnockback : MonoBehaviour, ICollidable
         // Calculate the knockback direction based on the collision point
         var knockbackDirection = (transform.position - collisionData.Position).normalized;
 
+        var knockbackForce = CollisionDataHandler.CalculateKnockbackForce(collisionData, weightData);
+
+        Debug.Log(knockbackForce);
+
         // Apply the knockback
-        ApplyKnockback(knockbackDirection, Mathf.Max(collisionData.KnockbackForce - weightData, defaultKnocbackValue));
+        ApplyKnockback(knockbackDirection, Mathf.Max(knockbackForce, defaultKnocbackValue));
     }
 }

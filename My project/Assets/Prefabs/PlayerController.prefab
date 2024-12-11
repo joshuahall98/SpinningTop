@@ -218,6 +218,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 183201600493700111}
+  - component: {fileID: 1208216429666798827}
   - component: {fileID: 120852665256159778}
   - component: {fileID: 813806921603245756}
   m_Layer: 0
@@ -243,6 +244,20 @@ Transform:
   - {fileID: 4614780972835962673}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1208216429666798827
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6060509995045906966}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 191f6b5a650336341ad2c4a2f17079bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputController: {fileID: 120852665256159778}
+  playerMovement: {fileID: 8977481715930127412}
 --- !u!114 &120852665256159778
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -282,7 +297,6 @@ GameObject:
   - component: {fileID: 8977481715930127412}
   - component: {fileID: 3983834790285419198}
   - component: {fileID: 8483374522875232792}
-  - component: {fileID: 4835351762977159378}
   - component: {fileID: 775886654769355530}
   - component: {fileID: 5887974089835841057}
   m_Layer: 0
@@ -384,7 +398,6 @@ MonoBehaviour:
   view: {fileID: 4492443317426733141}
   rb: {fileID: 5032417726550899463}
   rotationSpeed: 2000
-  maxSpeed: 20
   movementResponseTime: 0.5
   leanAmount: 20
   leanSpeed: 5
@@ -400,10 +413,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 479a444cac5310246894699b16f742c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCollisionDataHandler: {fileID: 4835351762977159378}
   playerCollision: {fileID: 775886654769355530}
   playerMovement: {fileID: 8977481715930127412}
-  rb: {fileID: 5032417726550899463}
 --- !u!114 &8483374522875232792
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -418,21 +429,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerStateController: {fileID: 813806921603245756}
   rb: {fileID: 5032417726550899463}
+  defaultKnocbackValue: 3
   weightData: 10
---- !u!114 &4835351762977159378
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7716377253765253626}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8aacb532a0271584c8e560d9ade62977, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  defaultKnockbackValue: 5
-  rb: {fileID: 5032417726550899463}
 --- !u!114 &775886654769355530
 MonoBehaviour:
   m_ObjectHideFlags: 0

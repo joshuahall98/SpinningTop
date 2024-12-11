@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class StaticCollision : MonoBehaviour, ICollisionDataProvider
 {
-    [SerializeField] float knockbackForce = 5;
+    [SerializeField] float knockbackForce = 3;
 
     public CollisionData GetCollisionData()
     {

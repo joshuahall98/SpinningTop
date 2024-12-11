@@ -2,21 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerCollision : MonoBehaviour
+public class PlayerCollision : MonoBehaviour, ICollisionDataProvider
 {
-    [SerializeField] PlayerCollisionDataHandler playerCollisionDataHandler;
     [SerializeField] CollisionProxy playerCollision;
     [SerializeField] PlayerMovement playerMovement;
-
-    [SerializeField] Rigidbody rb;
 
     Vector3 velocityBeforeCollision;
 
     private void Start()
     {
         playerCollision.OnCollisionEnter3D_Action += CollisionEnter;
-
-        rb = GetComponent<Rigidbody>();
     }
     private void FixedUpdate()
     {
@@ -24,12 +19,14 @@ public class PlayerCollision : MonoBehaviour
         velocityBeforeCollision = playerMovement.CurrentVelocity;
     }
 
-
     private void CollisionEnter(Collision collision)
     {
-        playerCollisionDataHandler.UpdateVelocityData(velocityBeforeCollision);
-
         // Handle the collision
         CollisionManager.instance.HandleCollisionEnter(gameObject, collision.gameObject);
+    }
+
+    public CollisionData GetCollisionData()
+    {
+        return new CollisionData(transform.position, velocityBeforeCollision.magnitude);
     }
 }

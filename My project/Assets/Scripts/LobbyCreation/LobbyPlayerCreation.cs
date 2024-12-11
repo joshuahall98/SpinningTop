@@ -71,7 +71,7 @@ public class LobbyPlayerCreation : MonoBehaviour
     {
         var playerPanel = Instantiate(playerPanelPrefab, playerPanelUIGrid.transform);
         playerPanels.Add(playerPanel);
-        playerPanel.GetComponent<LobbyPlayerPanel>().SetPlayerIDText($"Player {playerPanels.Count}");
+        playerPanel.GetComponent<LobbyPlayerPanel>().SetPlayerID(playerPanels.Count);
         return playerPanel;
     }
 
@@ -83,7 +83,7 @@ public class LobbyPlayerCreation : MonoBehaviour
 
         for (int i = 0; i < playerPanels.Count; i++)
         {
-            playerPanels[i].GetComponent<LobbyPlayerPanel>().SetPlayerIDText($"Player {i + 1}");
+            playerPanels[i].GetComponent<LobbyPlayerPanel>().SetPlayerID(i + 1);
         }
     }
 

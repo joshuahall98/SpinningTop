@@ -6,7 +6,6 @@ using UnityEngine.InputSystem.Users;
 
 public class PlayerManager : MonoBehaviour
 {
-
     PlayerManager instance;
 
     [SerializeField] GameObject playerInputObject;
@@ -22,8 +21,8 @@ public class PlayerManager : MonoBehaviour
         foreach(var user in InputUser.all)
         {
             var obj = Instantiate(playerInputObject);
-            var inputController = obj.GetComponent<PlayerInputController>();
-            inputController.AssignActions(user.actions);
+            var playerController = obj.GetComponent<PlayerController>();
+            playerController.AssignUser(user);
         }
     }
 }

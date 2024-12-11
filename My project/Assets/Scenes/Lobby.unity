@@ -123,6 +123,50 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &328660922
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 328660924}
+  - component: {fileID: 328660923}
+  m_Layer: 0
+  m_Name: PlayerStatsManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &328660923
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 328660922}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb82670cadd33ac49bc1285d7cf53586, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &328660924
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 328660922}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 703.8644, y: 772.795, z: 633.5966}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -414,7 +458,7 @@ MonoBehaviour:
     type: 3}
   multiplayerEventSystemPrefab: {fileID: 4904121339363706136, guid: 2e3a96b21d3296d44b70517b6614f61f,
     type: 3}
-  playerPanelPrefab: {fileID: 5207962693060249903, guid: 8c29764940b0bce4e9b5b3417a546792,
+  playerPanelPrefab: {fileID: 6115994746113643156, guid: 9574b899df85df148aad3c13810f0d67,
     type: 3}
   playerPanelUIGrid: {fileID: 1495384407511366428}
 --- !u!114 &466527046
@@ -768,8 +812,8 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 300, y: 400}
-  m_Spacing: {x: 160, y: 0}
+  m_CellSize: {x: 750, y: 400}
+  m_Spacing: {x: 100, y: 100}
   m_Constraint: 0
   m_ConstraintCount: 2
 --- !u!1 &2476797118157184671
@@ -917,3 +961,4 @@ SceneRoots:
   - {fileID: 410087041}
   - {fileID: 832575519}
   - {fileID: 5860977241132649255}
+  - {fileID: 328660924}

@@ -13,7 +13,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float rotationSpeed = 50f;
 
     [Header("Movement Settings")]
-    [SerializeField, Range(15f, 25f)] float maxSpeed = 5f; // Maximum movement speed
+    float maxSpeed = 5f; // Maximum movement speed
     [SerializeField, Range(0.25f, 0.75f)] float movementResponseTime;
 
     [Header("Tilt Settings")]
@@ -40,6 +40,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (maxSpeed <= 0f) return;
 
         if (stateController.IsKnockBacked)
         {
@@ -49,6 +50,19 @@ public class PlayerMovement : MonoBehaviour
 
         ApplyMovement();
         ApplyLeaning();
+    }
+
+    public void SetStats(int speed, int weight)
+    {
+        Debug.Log(speed);
+        maxSpeed = speed;
+
+        movementResponseTime = CalculateAgility(weight);
+    }
+
+    private float CalculateAgility(float weight)
+    {
+        return 0.25f + (0.75f - 0.25f) * ((weight - 1f) / (10f - 1f));
     }
 
     private void ApplyMovement()

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.UI;
@@ -12,6 +13,9 @@ using UnityEngine.SceneManagement;
 
 public class LocalMultiplayerLobby : MonoBehaviour
 {
+
+    public static LocalMultiplayerLobby Instance;
+
     [SerializeField] int maxPlayers = 2;
     //[SerializeField] InputActionAsset inputActionAsset;
     [SerializeField] GameObject generatedInputActionAssetObj;
@@ -37,9 +41,13 @@ public class LocalMultiplayerLobby : MonoBehaviour
     InputAction startGameAction;
 
     int joinedCount;
+    Dictionary<int, bool> playersAreReady = new();
 
     void Awake()
     {
+
+        Instance = this;
+
         // Bind joinAction to any button press.
         joinAction = new InputAction(binding: joinActionGamepad);
         joinAction.AddBinding(joinActionKeyboard);
@@ -86,10 +94,14 @@ public class LocalMultiplayerLobby : MonoBehaviour
 
         var device = context.control.device;
 
+        var userIndex = InputUser.FindUserPairedToDevice(device).Value.index;
+        var userID = InputUser.FindUserPairedToDevice(device).Value.id;
 
-        if (!UserDeviceMappingUtil.TryDeleteUser(device, out var userIndex)) return;
+        if (!UserDeviceMappingUtil.TryDeleteUser(device)) return;
 
         UserDeleted?.Invoke(userIndex);
+
+        playersAreReady.Remove((int)userID);
 
         joinedCount--;
     }
@@ -99,6 +111,8 @@ public class LocalMultiplayerLobby : MonoBehaviour
     /// </summary>
     private void StartGame(InputAction.CallbackContext context)
     {
+        if (joinedCount != playersAreReady.Count) return;
+
         var device = context.control.device;
 
         var userToRemove = InputUser.FindUserPairedToDevice(device).Value;
@@ -109,6 +123,18 @@ public class LocalMultiplayerLobby : MonoBehaviour
 
             SceneManager.LoadScene(gameSceneReference.GetSceneName());
         }    
+    }
+
+    public void PlayerIsReady(bool isReady, int playerID)
+    {
+        if(playersAreReady.ContainsKey(playerID))
+        {
+            playersAreReady[playerID] = isReady;
+        }
+        else
+        {
+            playersAreReady.Add(playerID, isReady);
+        }
     }
 
     /// <summary>
