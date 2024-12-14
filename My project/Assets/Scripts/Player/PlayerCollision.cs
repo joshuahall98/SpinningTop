@@ -7,6 +7,8 @@ public class PlayerCollision : MonoBehaviour, ICollisionDataProvider
     [SerializeField] CollisionProxy playerCollision;
     [SerializeField] PlayerMovement playerMovement;
 
+    int weightData;
+
     Vector3 velocityBeforeCollision;
 
     private void Start()
@@ -19,6 +21,11 @@ public class PlayerCollision : MonoBehaviour, ICollisionDataProvider
         velocityBeforeCollision = playerMovement.CurrentVelocity;
     }
 
+    public void SetStats(int weight)
+    {
+        weightData = weight;
+    }
+
     private void CollisionEnter(Collision collision)
     {
         // Handle the collision
@@ -27,6 +34,6 @@ public class PlayerCollision : MonoBehaviour, ICollisionDataProvider
 
     public CollisionData GetCollisionData()
     {
-        return new CollisionData(transform.position, velocityBeforeCollision.magnitude);
+        return new CollisionData(transform.position, velocityBeforeCollision.magnitude, weightData);
     }
 }

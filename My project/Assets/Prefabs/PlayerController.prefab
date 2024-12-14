@@ -258,6 +258,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inputController: {fileID: 120852665256159778}
   playerMovement: {fileID: 8977481715930127412}
+  playerKnockback: {fileID: 8483374522875232792}
+  playerCollision: {fileID: 3983834790285419198}
 --- !u!114 &120852665256159778
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -430,7 +432,6 @@ MonoBehaviour:
   playerStateController: {fileID: 813806921603245756}
   rb: {fileID: 5032417726550899463}
   defaultKnocbackValue: 3
-  weightData: 10
 --- !u!114 &775886654769355530
 MonoBehaviour:
   m_ObjectHideFlags: 0

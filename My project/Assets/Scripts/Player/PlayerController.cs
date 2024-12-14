@@ -8,7 +8,8 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] PlayerInputController inputController;
     [SerializeField] PlayerMovement playerMovement;
-    
+    [SerializeField] PlayerKnockback playerKnockback;
+    [SerializeField] PlayerCollision playerCollision;     
     public void AssignUser(InputUser user)
     {
         inputController.AssignActions(user.actions);
@@ -16,5 +17,9 @@ public class PlayerController : MonoBehaviour
         var playerStats = PlayerStatsManager.instance.GetPlayerStats(((int)user.id));
 
         playerMovement.SetStats(playerStats.Speed, playerStats.Weight);
+
+        playerKnockback.SetStats(playerStats.Weight);
+
+        playerCollision.SetStats(playerStats.Weight);
     }
 }

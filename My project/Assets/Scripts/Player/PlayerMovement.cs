@@ -54,7 +54,6 @@ public class PlayerMovement : MonoBehaviour
 
     public void SetStats(int speed, int weight)
     {
-        Debug.Log(speed);
         maxSpeed = speed;
 
         movementResponseTime = CalculateAgility(weight);
